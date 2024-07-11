@@ -66,6 +66,11 @@ RSpec.describe Dmv do
       @facility_1.register_vehicle(@cruz)
       expect(@facility_1.registered_vehicles).to include(Vehicle)
       expect(@facility_1.registered_vehicles.count).to eq 1
+
+      @facility_1.register_vehicle(@bolt)
+      @facility_1.register_vehicle(@camaro)
+      expect(@facility_1.registered_vehicles.count).to eq 3
+      
     end
 
     it 'collects fees based off vehicle type and age' do
@@ -74,10 +79,48 @@ RSpec.describe Dmv do
 
       @facility_1.register_vehicle(@cruz)
       expect(@facility_1.collected_fees).to eq 100
+
+      @facility_1.register_vehicle(@bolt)
+      expect(@facility_1.collected_fees).to eq 300
+
+      @facility_1.register_vehicle(@camaro)
+      expect(@facility_1.collected_fees).to eq 325
     end
 
-    it 'only registers each vehicle once regardless of facility' do
+    it 'assigns a plate_type to the registered vehicle' do
+      @facility_1.add_service('Vehicle Registration')
+      expect(@cruz.plate_type).to eq :temp
+
+      @facility_1.register_vehicle(@cruz)
+      expect(@cruz.plate_type).to eq :regular
+
+      @facility_1.register_vehicle(@bolt)
+      expect(@bolt.plate_type).to eq :ev
+
+      @facility_1.register_vehicle(@camaro)
+      expect(@camaro.plate_type).to eq :antique
     end
+      
+
+    it 'only registers each vehicle once regardless of facility' do
+      @facility_1.add_service('Vehicle Registration')
+      @facility_2.add_service('Vehicle Registration')
+      expect(@cruz.registration_date).to be nil
+
+      @facility_1.register_vehicle(@cruz)
+      expect(@facility_1.registered_vehicles).to include @cruz
+
+      @facility_2.register_vehicle(@cruz)
+      expect(@facility_2.registered_vehicles).to eq []
+    end
+
+    it 'cannot register vehicles if it doesnot have the service' do
+      @facility_1.register_vehicle(@cruz)
+      expect(@facility_1.services).to eq []
+      expect(@facility_1.registered_vehicles).to eq []
+      expect(@facility_1.collected_fees).to eq 0
+      expect(@cruz.registration_date).to be nil
+    end 
   end
 
   describe '#administer a written test' do
