@@ -142,9 +142,9 @@ RSpec.describe Dmv do
         expect(@facility_1.administer_written_test(@registrant_2)).to eq false
 
         expect(@registrant_1.permit?).to eq true
-        expect(@facility_1.administer_written_test(@registrant_2)).to eq false
+        expect(@facility_1.administer_written_test(@registrant_1)).to eq false
         @facility_1.add_service('Written Test')
-        expect(@facility_1.administer_written_test(@registrant_2)).to eq true        
+        expect(@facility_1.administer_written_test(@registrant_1)).to eq true        
       end
 
       it 'administers written test for registrants of age with permit' do
