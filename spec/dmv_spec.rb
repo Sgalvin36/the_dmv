@@ -237,7 +237,7 @@ RSpec.describe Dmv do
       end
 
       it 'updates the registrants license info if they renew' do
-        @facility_1.add_service('Road Test')
+        @facility_1.add_service('Renew License')
         @facility_1.administer_written_test(@registrant_1)
         @facility_1.administer_road_test(@registrant_1)
         @facility_1.renew_drivers_license(@registrant_1)
