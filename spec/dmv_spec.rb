@@ -168,9 +168,40 @@ RSpec.describe Dmv do
         expect(@registrant_3.permit?).to eq true
         expect(@facility_1.administer_written_test(@registrant_3)).to eq false
       end
+
+      it 'updates the registrants license info if they pass the test' do
+        @facility_1.add_service('Written Test')
+        @facility_1.administer_written_test(@registrant_1)
+        
+        expect(@registrant_1.license_data[:written]).to eq true
+      end
     end
 
     describe '#administer a road test' do
+      it 'can administer road test' do
+        expect(@facility_1.services).to eq []
+        @facility_1.add_service('Road Test')
+        expect(@facility_1.services).to include 'Road Test'
+      end
+
+      it 'only administers written test for registrants with written test && facility has the service' do
+        expect(@registrant_1.license_data[:written]).to eq false
+        expect(@facility_1.administer_road_test(@registrant_1)).to eq false
+
+        @facility_1.administer_written_test(@registrant_1)
+        expect(@registrant_1.license_data[:written]).to eq true
+        expect(@facility_1.administer_road_test(@registrant_1)).to eq false
+        @facility_1.add_service('Road Test')
+        expect(@facility_1.administer_road_test(@registrant_1)).to eq true        
+      end
+
+      it 'updates the registrants license info if they pass the test' do
+        @facility_1.add_service('Road Test')
+        @facility_1.administer_written_test(@registrant_1)
+        @facility_1.administer_road_test(@registrant_1)
+        
+        expect(@registrant_1.license_data[:written]).to eq true
+      end
     end
 
     describe '#renew a drivers license' do
