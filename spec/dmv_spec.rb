@@ -178,8 +178,12 @@ RSpec.describe Dmv do
     end
 
     describe '#administer a road test' do
+      before (:each) do
+        @facility_1.add_service('Written Test')
+      end
+
       it 'can administer road test' do
-        expect(@facility_1.services).to eq []
+        expect(@facility_1.services).to eq ['Written Test']
         @facility_1.add_service('Road Test')
         expect(@facility_1.services).to include 'Road Test'
       end
@@ -200,7 +204,7 @@ RSpec.describe Dmv do
         @facility_1.administer_written_test(@registrant_1)
         @facility_1.administer_road_test(@registrant_1)
         
-        expect(@registrant_1.license_data[:written]).to eq true
+        expect(@registrant_1.license_data[:license]).to eq true
       end
     end
 
