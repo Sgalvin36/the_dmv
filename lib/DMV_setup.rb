@@ -5,6 +5,13 @@ class DMVSetup
         @facilities = []
     end
 
+    def create_facilities(facility_data)
+        facility_data.each do |facility|
+            filtered_data = filter_data(facility)
+            @facilities << Facility.new(filtered_data)
+        end
+    end
+
     def filter_data(data)
         filtered_set = {}
         address_pair = {}
