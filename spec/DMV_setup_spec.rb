@@ -45,5 +45,30 @@ RSpec.describe DMVSetup do
             expect(facility_1.address).to eq "2855 Tremont Place Suite 118 Denver CO 80205"
             expect(facility_1.services).to eq []
         end
+
+        it 'can filter data from multiple sets' do
+            data_set = @dds.co_dmv_office_locations
+            @DMV.create_facilities(data_set)
+            expect(@DMV.facilities).to include Facility
+            expect(@DMV.facilities.count).to eq 5
+
+            data_set_2 = @dds.ny_dmv_office_locations
+            @DMV.create_facilities(data_set_2)
+            expect(@DMV.facilities.count).to eq 175
+        end
+
+        it 'has all correct data for New York facility' do
+            data_set = @dds.co_dmv_office_locations
+            @DMV.create_facilities(data_set)
+            data_set_2 = @dds.ny_dmv_office_locations
+            @DMV.create_facilities(data_set_2)
+
+            facility_6 = @DMV.facilities[5]
+            expect(facility_6).to be_an_instance_of Facility
+            expect(facility_6.name).to eq "HUNTINGTON"
+            expect(facility_6.phone).to eq "7184774820"
+            expect(facility_6.address).to eq "1815 E JERICHO TURNPIKE  HUNTINGTON NY 11743"
+            expect(facility_6.services).to eq []
+        end
     end
 end
