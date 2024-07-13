@@ -27,5 +27,12 @@ RSpec.describe DMVSetup do
 
             expect(sorted_data[:address]).to eq("3698 W. 44th Avenue Suite 315 Denver CO 80211")
         end
+
+        it 'creates facilities from data set' do
+            data_set = @dds.co_dmv_office_locations
+            @DMV.create_facilities(data_set)
+            expect(@DMV.facilities).to include Facility
+            expect(@DMV.facilities.count).to eq 5
+        end
     end
 end
