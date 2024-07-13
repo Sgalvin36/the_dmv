@@ -16,9 +16,9 @@ class DMVSetup
         filtered_set = {}
         address_pair = {}
         data.each_pair do |key, value|
-          if key.to_s.include?("office") || key == :name
+          if (key.to_s.include?("office") || key.to_s.include?("name")) && !(key.to_s.include?("type")) && !(key.to_s.include?("info"))
             filtered_set[:name] = value
-          elsif key.to_s.include?("phone") || key == :phone
+          elsif key.to_s.include?("phone") && !(key.to_s.include?('text'))
             filtered_set[:phone] = value
           elsif key.to_s.include?("address") || key.to_s.include?("city") || key.to_s.include?("state") || key.to_s.include?("zip") 
             address_pair[(key.to_s)] = value
@@ -44,6 +44,7 @@ class DMVSetup
                 address_string[0] = value
             end
         end
+        address_string = address_string.compact
         address_string.join(" ")
     end
 end
