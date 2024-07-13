@@ -40,7 +40,7 @@ class DMVSetup
                 address_string[4] = value
             elsif key.include?("address") && value.include?("Suite")
                 address_string[1] = value
-            elsif key.include?("address") && !(value.include?("Suite"))
+            elsif key.include?("address") && !(key.include?("id")) && !(value.include?("Suite"))
                 address_string[0] = value
             end
         end

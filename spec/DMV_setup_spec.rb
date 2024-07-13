@@ -34,5 +34,16 @@ RSpec.describe DMVSetup do
             expect(@DMV.facilities).to include Facility
             expect(@DMV.facilities.count).to eq 5
         end
+
+        it 'has all correct data for each facility' do
+            data_set = @dds.co_dmv_office_locations
+            @DMV.create_facilities(data_set)
+            facility_1 = @DMV.facilities[0]
+            expect(facility_1).to be_an_instance_of Facility
+            expect(facility_1.name).to eq "DMV Tremont Branch"
+            expect(facility_1.phone).to eq "(720) 865-4600"
+            expect(facility_1.address).to eq "2855 Tremont Place Suite 118 Denver CO 80205"
+            expect(facility_1.services).to eq []
+        end
     end
 end
