@@ -67,7 +67,20 @@ RSpec.describe DMVSetup do
             expect(facility_6).to be_an_instance_of Facility
             expect(facility_6.name).to eq "HUNTINGTON"
             expect(facility_6.phone).to eq "7184774820"
-            expect(facility_6.address).to eq "1815 E JERICHO TURNPIKE  HUNTINGTON NY 11743"
+            expect(facility_6.address).to eq "1815 E JERICHO TURNPIKE HUNTINGTON NY 11743"
+            expect(facility_6.services).to eq []
+        end
+
+        it 'has all correct data for Missouri facility' do
+            data_set = @dds.co_dmv_office_locations
+            @DMV.create_facilities(data_set)
+            data_set_2 = @dds.mo_dmv_office_locations
+            @DMV.create_facilities(data_set_2)
+            facility_6 = @DMV.facilities[5]
+            expect(facility_6).to be_an_instance_of Facility
+            expect(facility_6.name).to eq "FERGUSON-OFFICE CLOSED UNTIL FURTHER NOTICE"
+            expect(facility_6.phone).to eq "(314) 733-5316"
+            expect(facility_6.address).to eq "10425 WEST FLORISSANT FERGUSON MO 63136"
             expect(facility_6.services).to eq []
         end
     end
