@@ -61,6 +61,17 @@ RSpec.describe VehicleFactory do
             expect(@vf.vehicle_lot).to include Vehicle
             # require 'pry';binding.pry
         end
+
+        it 'has valid data for each iteration of vehicle' do
+            @vf.create_vehicles(@data_2)
+            @vf.vehicle_lot.each do |vehicle|
+                expect(vehicle.vin).to be_truthy
+                expect(vehicle.year).to be_truthy
+                expect(vehicle.make).to be_truthy
+                expect(vehicle.model).to be_truthy
+                expect(vehicle.engine).to be_truthy
+            end
+        end
     end
 
 end

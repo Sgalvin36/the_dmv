@@ -13,7 +13,7 @@ class VehicleFactory
     end
 
     def filter_data(data)
-        filtered_set = {}
+        filtered_set = Hash.new("")
         data.each_pair do |key, value|
           if key.to_s.include?("vin") || key == :vin
             filtered_set[:vin] = value
