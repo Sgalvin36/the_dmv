@@ -26,6 +26,13 @@ RSpec.describe VehicleFactory do
             expect(@vf.vehicle_lot).to include Vehicle
         end
 
+        it 'can filter data' do
+            vehicles = @dds.wa_ev_registrations
+            filtered_data = @vf.filter_data(vehicles[12])
+
+            expect(filtered_data).to eq({vin: '1G1FZ6S06P', year: "2023", make: 'CHEVROLET', model: 'Bolt EUV', engine: :ev})
+        end
+
         it 'creates vehicles from external data' do
             vehicles = @dds.wa_ev_registrations
             @vf.create_vehicles(vehicles)
