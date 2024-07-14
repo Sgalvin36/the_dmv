@@ -43,5 +43,24 @@ RSpec.describe VehicleFactory do
         end
     end
 
+    describe '#work through different registration data' do
+        before(:each) do
+            @data_2 = @dds.ny_registrations
+        end
+
+        it 'can filter data' do
+            filtered_data = @vf.filter_data(@data_2[0])
+
+            expect(filtered_data).to eq({vin: '999999999999', year: "1975", make: 'STARC', model: 'BOAT', engine: "GAS"})
+        end
+
+        it 'creates vehicles from external data' do
+            @vf.create_vehicles(@data_2)
+
+            expect(@vf.vehicle_lot.count).to eq 1000
+            expect(@vf.vehicle_lot).to include Vehicle
+            # require 'pry';binding.pry
+        end
+    end
 
 end

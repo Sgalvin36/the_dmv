@@ -21,10 +21,12 @@ class VehicleFactory
             filtered_set[:year] = value
           elsif key == :make
             filtered_set[:make] = value
-          elsif key == :model
+          elsif key == :model || key.to_s.include?("body")
             filtered_set[:model] = value
           elsif key.to_s.include?("electric") || key == :engine
             filtered_set[:engine] = :ev
+          elsif key.to_s.include?('fuel')
+            filtered_set[:engine] = value
           end
         end
         filtered_set
