@@ -230,4 +230,22 @@ RSpec.describe Facility do
       end
     end
   end
+
+  describe 'analysing registration data' do
+    before(:each) do
+      @vehicle_collection = DmvDataService.new.wa_ev_registrations
+      @factory = VehicleFactory.new
+      @factory.create_vehicles(@vehicle_collection)
+      @vehicles_to_be_registered = @factory.vehicle_lot
+      @facility_1.add_service('Vehicle Registration')
+    end
+
+    it 'registeres all vehicles from data set' do
+      @vehicles_to_be_registered.each do |vehicle|
+        @facility_1.register_vehicle(vehicle)
+      end
+      expect(@facility_1.registered_vehicles.count).to eq 1000
+      expect(@facility_1.registered_vehicles). to include Vehicle
+    end
+  end
 end

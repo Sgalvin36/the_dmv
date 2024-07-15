@@ -1,5 +1,5 @@
 class VehicleFactory
-    attr_reader :vehicle_lot
+    attr_accessor :vehicle_lot
     
     def initialize
         @vehicle_lot = []
