@@ -238,14 +238,31 @@ RSpec.describe Facility do
       @factory.create_vehicles(@vehicle_collection)
       @vehicles_to_be_registered = @factory.vehicle_lot
       @facility_1.add_service('Vehicle Registration')
-    end
-
-    it 'registeres all vehicles from data set' do
       @vehicles_to_be_registered.each do |vehicle|
         @facility_1.register_vehicle(vehicle)
       end
+      
+    end
+
+    it 'registeres all vehicles from data set' do
       expect(@facility_1.registered_vehicles.count).to eq 1000
       expect(@facility_1.registered_vehicles). to include Vehicle
+    end
+
+    it 'can generate an array of all values matching a specific attribute' do
+      expect(@facility_1.all_of_one_attribute('year')).to be_an_instance_of Array
+      expect(@facility_1.all_of_one_attribute('year').count).to eq 1000
+    end
+    
+    it 'can show list of unique values per key' do
+      # require 'pry';binding.pry
+      expect(@facility_1.unique_types('year')).to be_an_instance_of Array
+      expect(@facility_1.unique_types('year').count).to eq 14
+      p @facility_1.unique_types('year').sort
+    end
+
+    xit 'can reveal how many instances of a specific value there are' do
+      expect(@facility_1.unique_types(year).count).to eq 45
     end
   end
 end
