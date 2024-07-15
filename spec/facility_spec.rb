@@ -253,7 +253,7 @@ RSpec.describe Facility do
       expect(@facility_1.all_of_one_attribute('year')).to be_an_instance_of Array
       expect(@facility_1.all_of_one_attribute('year').count).to eq 1000
     end
-    
+
     it 'can show list of unique values per key' do
       # require 'pry';binding.pry
       expect(@facility_1.unique_types('year')).to be_an_instance_of Array
@@ -261,8 +261,17 @@ RSpec.describe Facility do
       p @facility_1.unique_types('year').sort
     end
 
-    xit 'can reveal how many instances of a specific value there are' do
-      expect(@facility_1.unique_types(year).count).to eq 45
+    it 'can reveal how many instances of a specific value there are' do
+      expect(@facility_1.quantity_unique_types('year')).to be_an_instance_of Hash
+      expect(@facility_1.quantity_unique_types('year').count).to eq 14
+      p @facility_1.quantity_unique_types('year')
+    end
+
+    it 'can reveal other information for vehicle registration' do
+      expect(@facility_1.quantity_unique_types('model')).to be_an_instance_of Hash
+      expect(@facility_1.quantity_unique_types('model').count).to eq 67
+      expect(@facility_1.quantity_unique_types('make')).to be_an_instance_of Hash
+      expect(@facility_1.quantity_unique_types('make').count).to eq 27
     end
   end
 end
