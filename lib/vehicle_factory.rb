@@ -1,5 +1,5 @@
 class VehicleFactory
-    attr_reader :vehicle_lot
+    attr_accessor :vehicle_lot
     
     def initialize
         @vehicle_lot = []
@@ -13,7 +13,7 @@ class VehicleFactory
     end
 
     def filter_data(data)
-        filtered_set = {}
+        filtered_set = Hash.new("")
         data.each_pair do |key, value|
           if key.to_s.include?("vin") || key == :vin
             filtered_set[:vin] = value
@@ -21,10 +21,12 @@ class VehicleFactory
             filtered_set[:year] = value
           elsif key == :make
             filtered_set[:make] = value
-          elsif key == :model
+          elsif key == :model || key.to_s.include?("body")
             filtered_set[:model] = value
           elsif key.to_s.include?("electric") || key == :engine
             filtered_set[:engine] = :ev
+          elsif key.to_s.include?('fuel')
+            filtered_set[:engine] = value
           end
         end
         filtered_set

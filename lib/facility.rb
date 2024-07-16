@@ -58,4 +58,28 @@ class Facility
       false
     end
   end
+
+  
+  def all_of_one_attribute(attribute)
+    @all_types = []
+    @registered_vehicles.each do |vehicle|
+      @all_types << (vehicle.instance_variable_get("@#{attribute}"))
+    end
+    @all_types
+  end
+
+  def unique_types(attribute)
+    @unique_types = all_of_one_attribute(attribute)
+    @unique_types.uniq
+  end
+
+  def quantity_unique_types(attribute)
+    quantities = {}
+    types = unique_types(attribute)
+    total_data = all_of_one_attribute(attribute)
+    types.map do |type|
+      quantities[type] = total_data.count(type)
+    end
+    quantities
+  end
 end

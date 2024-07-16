@@ -13,7 +13,7 @@ class DMVSetup
     end
 
     def filter_data(data)
-        filtered_set = {}
+        filtered_set = Hash.new("")
         address_pair = {}
         data.each_pair do |key, value|
           if (key.to_s.include?("office") || key.to_s.include?("name")) && !(key.to_s.include?("type")) && !(key.to_s.include?("info"))

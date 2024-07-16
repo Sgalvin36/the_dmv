@@ -21,7 +21,7 @@ class Vehicle
   end
 
   def antique?
-    Date.today.year - @year > 25
+    Date.today.year - @year.to_i > 25
   end
 
   def electric_vehicle?
